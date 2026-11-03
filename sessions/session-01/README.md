@@ -22,7 +22,7 @@
 In old westerns the stagecoach wheels seem to turn backwards while the horses gallop forward. Helicopter blades on video sometimes freeze. Nothing is wrong with the wheel or the blades: a camera does not watch continuously, it takes 24 or 30 pictures every second. Between two pictures the wheel can turn many times, and the brain connects the dots in the simplest way. Can we predict exactly what a viewer will see, and which way the wheel seems to go?
 
 ## B. Concept and theory
-Paint one marker on a wheel that turns f revolutions per second (rev/s). The camera takes fs frames per second, so frames are 1/fs seconds apart. In that time the marker turns step = 360 f / fs degrees, which may be much more than one full turn. A viewer cannot count full turns that happen between frames; they only see where the marker is now and assume the shortest way from the old place to the new one. That shortest signed turn is the step folded into the range -180 to +180 degrees. Multiplying the folded step by the number of frames per second and dividing by 360 gives the apparent speed in rev/s. A negative apparent speed means the wheel seems to turn backwards. Exactly 180 degrees per frame is the flicker limit: both ways look equally short. Adding a whole number of turns to f per frame (that is, adding fs to f) changes nothing the camera can see.
+Paint one marker on a wheel that turns f revolutions per second (rev/s). The camera takes fs frames per second, so frames are 1/fs seconds apart. In that time the marker turns step = 360 f / fs degrees, which may be much more than one full turn. A viewer cannot count full turns that happen between frames; they only see where the marker is now and assume the shortest way from the old place to the new one. That shortest signed turn is the step folded into the range -180 to +180 degrees. Multiplying the folded step by the number of frames per second and dividing by 360 gives the apparent speed in rev/s. A negative apparent speed means the wheel seems to turn backwards. Exactly 180 degrees per frame is the flicker limit: both ways look equally short. Adding fs to f (one extra whole turn per frame) changes nothing the camera can see.
 
 | Symbol | Meaning | Unit |
 |---|---|---|
@@ -89,6 +89,7 @@ Between two frames the marker turns almost one full turn. Compare it with a full
 Between two frames the marker turns 348 degrees, which is 12 degrees short of a full turn. The eye ignores the full turn and sees the marker land 12 degrees before where it started, so it seems to move 12 degrees backwards per frame: -12 / 360 x 30 = -1 rev/s. A wheel slightly faster than fs would land slightly past its start and seem to move slowly forward.
 
 </details>
+
 **Question type B: Numerical.** A wheel turns 33 rev/s and is filmed at 24 frames per second. Find the turn per frame, the apparent turn and the apparent speed. Do a sanity check.
 
 <details>
@@ -104,6 +105,7 @@ step = 360 f / fs, then fold into -180 to +180 degrees.
 step = 360 x 33 / 24 = 495 degrees. Folded: 495 - 360 = 135 degrees. Apparent speed = 135 / 360 x 24 = +9 rev/s (forward). Check: f - k fs with k = round(33 / 24) = round(1.375) = 1 gives 33 - 24 = 9 rev/s. Sanity: the apparent speed can never exceed fs / 2 = 12 rev/s in size, and 9 is below it.
 
 </details>
+
 **Question type C: Graph and simulation interpretation.** Using the sawtooth graph for 30 frames per second, for which true speeds between 0 and 60 rev/s does the wheel seem to go backwards, and where does it seem frozen?
 
 <details>
@@ -119,6 +121,7 @@ Backwards means the curve is below zero.
 The curve is below zero for 15 < f < 30 rev/s and for 45 < f < 60 rev/s: backwards. It touches zero at f = 0, 30 and 60 rev/s: frozen. At exactly f = 15 and 45 rev/s the apparent speed is 15 in size, the flicker limit, and the direction cannot be told. Units: rev/s on both axes.
 
 </details>
+
 **Question type D: Design and optimisation challenge.** A wheel turns 29 rev/s. You may film with 24, 25, 28, 29, 30 or 60 frames per second. Which choice shows it turning slowly forward at no more than 1 rev/s? Which choice shows its true speed? What does the true-speed choice cost?
 
 <details>
@@ -141,9 +144,9 @@ Score yourself with [RUBRIC.md](../../RUBRIC.md). Print the [activity sheet](act
 | Common misconception | What is actually true |
 |---|---|
 | The camera is broken, or the wheel changes its speed. | Nothing changes: the wheel turns steadily; the effect comes only from looking at it at fixed instants. |
-| A faster wheel always looks faster. | Past fs/2 the apparent speed falls again, reaches zero at f = fs and then repeats: apparent speed is a sawtooth, not a line. |
+| A faster wheel always looks faster. | Past fs/2 the apparent speed jumps to a backwards value, climbs back to zero at f = fs and then repeats: apparent speed is a sawtooth, not a line. |
 | The wagon-wheel effect needs a camera. | Anything that samples does it, for example a flickering lamp or a strobe, and the eye itself under a flickering light. |
-| The backwards turning is an optical illusion in the brain only. | It is exactly what the pictures contain: the marker really sits at the 'backwards' position in every frame. The sample values do not distinguish it from true backwards motion. |
+| The backwards turning is an optical illusion in the brain only. | It is exactly what the pictures contain: in every frame the marker really sits at the 'backwards' position, and from the frames alone nobody can tell this from true backwards motion. |
 
 ## Glossary
 - **frame rate**: pictures taken per second, in frames/s (fps)
