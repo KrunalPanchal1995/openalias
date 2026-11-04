@@ -2,16 +2,6 @@
 
 This is the path, not the code. Each milestone says what you learn, what you build, and how you know it works. Pick one and open a pull request. See [CONTRIBUTING.md](../CONTRIBUTING.md).
 
-## Session 4: Noise-proof recovery
-
-**You will learn:** How measurement error spoils a ladder match and how to choose a match tolerance, or score candidates, instead of demanding equality.
-
-**You will build:** A recovery function that takes noisy apparent speeds and returns the most likely true speed with an uncertainty.
-
-**Checkpoint (not met by the shipped code):** With Gaussian measurement noise of 0.3 rev/s on both apparent speeds (30 and 24 fps, true speed uniform from 5 to 59 rev/s), the recovered speed is within 0.5 rev/s in at least 95 percent of 2000 trials (the shipped `recover_frequency` manages about 52 percent).
-
-**Difficulty:** intermediate
-
 ## Session 5: A third clip
 
 **You will learn:** Why adding a third frame rate extends the unambiguous range, and how to choose the three rates.
