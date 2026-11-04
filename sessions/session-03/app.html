@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Session 3: two clips, one fan</title>
 <style>
-  :root { --bg:#ffffff; --fg:#14181f; --muted:#5b6472; --card:#f3f5f8; --accent:#1f6feb; --good:#1a7f37; --bad:#b42318; --line:#d7dce3; }
-  @media (prefers-color-scheme: dark) { :root { --bg:#0e1116; --fg:#e6e9ee; --muted:#9aa3b2; --card:#171b22; --accent:#58a6ff; --good:#3fb950; --bad:#f97066; --line:#2a313c; } }
+  :root { --bg:#ffffff; --fg:#14181f; --muted:#5b6472; --card:#f3f5f8; --accent:#003f7f; --good:#c86a00; --bad:#d81b60; --line:#d7dce3; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#0e1116; --fg:#e6e9ee; --muted:#9aa3b2; --card:#171b22; --accent:#3b8fe0; --good:#ffc857; --bad:#e0457b; --line:#2a313c; } }
   * { box-sizing: border-box; }
   body { margin:0; padding:16px; background:var(--bg); color:var(--fg); font:16px/1.5 system-ui, sans-serif; }
   main { max-width: 780px; margin: 0 auto; }
@@ -122,14 +122,14 @@ if (graph === "ladder") {
   ctx.fillStyle = C.bad; ctx.textAlign = "center"; ctx.fillText("true " + fmt(p.f), X(p.f), 58);
   common.forEach(v => { ctx.strokeStyle = C.fg; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(X(v), 175, 9, 0, 2 * Math.PI); ctx.stroke(); });
   ctx.strokeStyle = C.good; ctx.lineWidth = 5; ctx.beginPath(); ctx.moveTo(X(0), 372); ctx.lineTo(X(Math.min(lcm, FMAX)), 372); ctx.stroke();
-  ctx.fillStyle = C.muted; ctx.textAlign = "left"; ctx.fillText("answer is unique inside the green bar (0 to " + lcm + " rev/s); circles mark values on both ladders", 40, 396);
+  ctx.fillStyle = C.muted; ctx.textAlign = "left"; ctx.fillText("answer is unique inside the orange bar (0 to " + lcm + " rev/s); circles mark values on both ladders", 40, 396);
 } else {
   const N = 120, ampAt = (fr, fs) => { let re = 0, im = 0; for (let n = 0; n < N; n++) { const x = Math.sin(2 * Math.PI * p.f * n / fs + 0.3), a = 2 * Math.PI * fr * n / fs; re += x * Math.cos(a); im -= x * Math.sin(a); } return 2 * Math.hypot(re, im) / N; };
   const A = axes({ x: [0, 30], y: [0, 1.2], xl: "frequency seen in the clip (Hz)", yl: "amplitude (arbitrary units)", title: "Spectrum of the marker signal in each clip" }, C);
   curve(fr => ampAt(fr, p.fs1), A, C.accent, 0, p.fs1 / 2, 150);
   curve(fr => ampAt(fr, p.fs2), A, C.good, 0, p.fs2 / 2, 150);
   ctx.font = "12px system-ui"; ctx.textAlign = "left"; ctx.fillStyle = C.accent; ctx.fillText("blue: clip 1, peak at " + Math.abs(a1).toFixed(1) + " Hz", A.L + 10, A.T + 16);
-  ctx.fillStyle = C.good; ctx.fillText("green: clip 2, peak at " + Math.abs(a2).toFixed(1) + " Hz", A.L + 10, A.T + 32);
+  ctx.fillStyle = C.good; ctx.fillText("orange: clip 2, peak at " + Math.abs(a2).toFixed(1) + " Hz", A.L + 10, A.T + 32);
 }
 readout("apparent speeds " + a1.toFixed(1) + " rev/s (clip 1) and " + a2.toFixed(1) + " rev/s (clip 2) &nbsp; common candidates in 0 to 150 rev/s: " + (common.length ? common.map(v => v.toFixed(1)).join(", ") : "none") + " &nbsp; answer unique up to " + lcm + " rev/s &nbsp; true speed " + fmt(p.f) + " rev/s " + (p.f < lcm ? "(recovered)" : "(NOT recoverable)"));
 
