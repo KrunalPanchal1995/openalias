@@ -2,16 +2,6 @@
 
 This is the path, not the code. Each milestone says what you learn, what you build, and how you know it works. Pick one and open a pull request. See [CONTRIBUTING.md](../CONTRIBUTING.md).
 
-## Session 5: A third clip
-
-**You will learn:** Why adding a third frame rate extends the unambiguous range, and how to choose the three rates.
-
-**You will build:** A recovery function for three clips with a unique answer over a wide range.
-
-**Checkpoint (not met by the shipped code):** With rates 30, 24 and 25 fps, the true speed 22.5 rev/s is the only candidate below 400 rev/s (two clips leave 4 candidates: 22.5, 142.5, 262.5 and 382.5).
-
-**Difficulty:** intermediate
-
 ## Session 6: Fans with many identical blades
 
 **You will learn:** Why only the pattern frequency N f is visible, and what an apparent speed means for a wheel with N spokes.

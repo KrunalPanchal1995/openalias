@@ -18,12 +18,13 @@ Anything that looks at a fast process only at fixed instants can be fooled: whee
 \section*{The end goal}
 Understand the wagon-wheel effect and recover the true frequency. The end goal is to understand the wagon-wheel effect and recover the true frequency from sampled data. The same ideas are used in digital audio, oscilloscopes, vibration measurement and high-speed video.
 
-\section*{How the four sessions build up}
+\section*{How the five sessions build up}
 \begin{enumerate}[nosep]
 \item \textbf{Session 1: A wheel on camera: slow, frozen or backwards} (Level 1, conceptual interactive model, 60 min).
 \item \textbf{Session 2: The alias formula and the Nyquist limit} (Level 2, mathematical engineering model, 75 min).
 \item \textbf{Session 3: Simulate, find the folded peak, recover the true speed} (Level 3, simulation and validation, 90 min).
 \item \textbf{Session 4: Noise-proof recovery of the true speed} (Level 3, simulation and validation, 90 min).
+\item \textbf{Session 5: A third clip: a wider range and less noise} (Level 3, simulation and validation, 90 min).
 \end{enumerate}
 
 \section{Session 1: A wheel on camera: slow, frozen or backwards}
@@ -215,14 +216,46 @@ Rates 30 and 24 fps, $\sigma=0.3$ rev/s, range 5 to 59 rev/s, measured apparent 
 \item \textbf{Design and optimisation challenge.} A marker is found with an error of 0.1 rad in each frame of a clip at 30 fps. How many frames are needed to be within 0.5 rev/s in at least 95 percent of the trials, and in at least 99 percent?
 \end{enumerate}
 
+\section{Session 5: A third clip: a wider range and less noise}
+
+\subsection*{A. Real-world problem}
+Two clips at 30 and 24 fps cannot tell 22.5 rev/s from 142.5, 262.5 or 382.5 rev/s: the pair of pictures repeats every $\mathrm{lcm}(30,24)=120$ rev/s. A turbine, a drill or a model engine can easily turn faster than that. A third clip at 25 fps stretches the range to 600 rev/s. Why does it work, which third frame rate helps and which does not, and what does the extra clip do to the noise? This is general education about signal processing, not a measurement method for any safety decision.
+
+\subsection*{B. Concept and theory}
+Each clip allows a ladder of rungs $a+kf_s$, and a speed on all the ladders fits every clip. A wrong speed $f'=f+d$ looks the same as $f$ on a clip at $f_s$ when $d$ is a whole number of frame rates, so it fools all three clips only when $d$ is a multiple of $\mathrm{lcm}(f_{s1},f_{s2},f_{s3})$: the unambiguous range is the least common multiple of all the rates. A third rate adds nothing when it divides the lcm of the other two (20, 24, 30, 40 and 60 fps next to 30 and 24), and a rate that helps can still be too small (36 fps gives 360). With noise, the best set of rungs, one per ladder, is the one whose members are closest to each other; its mean is the answer, with standard deviation $\sigma/\sqrt n$.
+
+\begin{equation*}
+f'=f+d\ \text{looks the same on all clips}\iff d=k\,\mathrm{lcm}(f_{s1},f_{s2},f_{s3}),\qquad P(|\hat f-f|\le t)=\operatorname{erf}\!\left(\frac{t\sqrt n}{\sigma\sqrt2}\right)
+\end{equation*}
+
+\begin{center}\includegraphics[width=0.85\linewidth]{figures/s05_third_clip.png}\\\small Three ladders, the range for every third rate, the share right against noise with two and three clips, and the error with two and three clips.\end{center}
+
+\subsection*{E. Worked example}
+Apparent speeds $-7.5$, $-1.5$ and $-2.5$ rev/s at 30, 24 and 25 fps.
+\begin{enumerate}[nosep]
+\item Clips 1 and 2 share 22.5, 142.5, 262.5 and 382.5 below 400 rev/s (120 apart).
+\item Clip 3 allows $-2.5+25j$: 142.5, 262.5 and 382.5 are not on its ladder (145, 265 and 385 are not multiples of 25); only 22.5 is.
+\item The next shared speed is $22.5+600=622.5$.
+\end{enumerate}
+\textbf{Answer.} Two clips leave 22.5, 142.5, 262.5 and 382.5; three clips leave only 22.5, unique up to 600 rev/s.
+
+\subsection*{F. Questions}
+\begin{enumerate}[nosep]
+\item \textbf{Conceptual.} With 30 and 24 fps, a speed 120 rev/s above the true one fools both clips. Why does it no longer fool a third clip at 25 fps?
+\item \textbf{Numerical.} The first two rates are 30 and 24 fps. For third rates of 20, 25, 36 and 40 fps give the range of the three rates, and say which make a fan of up to 400 rev/s recoverable.
+\item \textbf{Graph and simulation interpretation.} In the top right panel the bars at 36, 45 and 48 fps are green but lie below the dashed 400 rev/s line. What does that mean for a fan at 380 rev/s filmed with 30, 24 and 45 fps?
+\item \textbf{Design and optimisation challenge.} You have clips at 30 and 24 fps and must measure fans up to 400 rev/s with noise 0.3 rev/s. Which third rates in 20 to 60 fps work, which would you choose, and what share of trials will be within 0.5 rev/s?
+\end{enumerate}
+
 \section{Real-world mini-project}
 \textbf{How fast does the fan really turn?.} A fan with one blade marked in red was filmed twice: once at 30 frames per second and once at 24 frames per second. At 30 fps the marker seems to turn backwards, at 24 fps it also seems to turn backwards but much more slowly. The clips are the function \texttt{mystery\_fan(fs)} of Session 3 (do not read the true speed from its code). The fan is known to turn at less than 60 revolutions per second. Measure both clips, recover the true speed, and confirm it with a third clip filmed at 25 fps.
 
 \textbf{Recover the speed from noisy apparent speeds (classroom exercise only).} Given two noisy apparent speeds from a 30 and a 24 fps clip with noise 0.3 rev/s, return the most likely true speed and its uncertainty without using the true speed, then grade the rule on 2000 simulated trials. The Session 3 rule is right in 52 percent of the trials, exact matching with a tolerance of 1.3 in 97.7 percent, and the best pair in 98.5 percent, which meets the line of 95 percent within 0.5 rev/s and sits at the limit erf(0.5/0.3) = 98.2 percent. The 2 standard deviation band holds 95.2 percent of the errors. This is a teaching exercise on synthetic data, not a method for measuring a real machine.
 
+\textbf{Choose three frame rates and recover a fast fan (classroom exercise only).} With clips at 30 and 24 fps and fans up to 400 rev/s, choose the third rate from 20 to 60 fps and check the choice by simulation. The rates 20, 24, 30, 36, 40, 45, 48 and 60 fps fail (their range stays at or below 400 rev/s) and the other 33 work; with 25 fps (range 600) the exact recovery is unique for all 1199 speeds tested, and with noise 0.3 rev/s the share within 0.5 rev/s is 99.9 percent with three clips against 28 percent with two. This is a teaching exercise on synthetic data, not a method for measuring a real machine.
+
 \section{The path ahead}
 \begin{enumerate}[nosep]
-\item \textbf{Session 5: A third clip.} A recovery function for three clips with a unique answer over a wide range.
 \item \textbf{Session 6: Fans with many identical blades.} A clip renderer and a measurement function for N identical blades, with one blade tinted to tell them apart.
 \item \textbf{Session 7: A fan that spins up.} A tracker that follows the folded apparent speed through time and reconstructs the true speed curve.
 \item \textbf{Session 8: Real cameras: variable frame rate and rolling shutter.} A simulator with frame timestamps from a clock with 0.5 percent jitter and a line-by-line shutter, plus a correction.
@@ -260,6 +293,14 @@ Rates 30 and 24 fps, $\sigma=0.3$ rev/s, range 5 to 59 rev/s, measured apparent 
 \item \textbf{Numerical.} Hint: Rungs are $4.3+30k$ and $8.8+25m$, searched 4 sigma beyond the range. Solution: Rungs 4.3, 34.3 and 8.8, 33.8, 58.8. The smallest gaps are 0.5 (middle 34.05) and 4.5. The speed is 34.05 $\pm$ 0.28 rev/s with margin $(4.5-0.5)/(0.4\sqrt2)=7.1$. The Session 3 rule needs a gap of 0.3 or less and gives no answer.
 \item \textbf{Graph and simulation interpretation.} Hint: What is the standard deviation of the error of the best pair at sigma = 0.7? Solution: $0.7/\sqrt2=0.49$ rev/s, so 0.5 rev/s is about one standard deviation and erf(0.5/0.7) = 69 percent fall inside. The best pair chooses the right pair of rungs; the rest is the noise two numbers carry, and only a smaller sigma helps.
 \item \textbf{Design and optimisation challenge.} Hint: $\sigma=f_s\sqrt2\sigma_\theta/(2\pi(n-1))$ and the share is erf(0.5/sigma). Solution: $\sigma=0.675/(n-1)$: n = 3 gives 0.338 and 96.4 percent; n = 4 gives 0.225 and 99.8 percent. Three frames for 95 percent, four for 99 percent.
+\end{enumerate}
+
+\subsection*{Session 5}
+\begin{enumerate}[nosep]
+\item \textbf{Conceptual.} Hint: When does adding $d$ rev/s to a speed leave a clip's apparent speed unchanged? Solution: When $d$ is a whole number of frame rates. $120=4\times30=5\times24$ fools clips 1 and 2, but $120/25=4.8$ is not whole, so clip 3 changes by $120-5\times25=-5$ rev/s. The first $d$ that works for all three is 600.
+\item \textbf{Numerical.} Hint: The range is $\mathrm{lcm}(30,24,r)$ and $\mathrm{lcm}(30,24)=120$. Solution: 20 fps gives 120, 25 gives 600, 36 gives 360, 40 gives 120. Only 25 fps exceeds 400 rev/s.
+\item \textbf{Graph and simulation interpretation.} Hint: What is $\mathrm{lcm}(30,24,45)$? Solution: 360 rev/s. $380=20+360$, so a fan at 380 rev/s looks exactly like one at 20 rev/s on all three clips and both fit. A rate that helps extends the range only to the new lcm.
+\item \textbf{Design and optimisation challenge.} Hint: Use rate\_table(30, 24, range(20, 61)) and run\_trials. Solution: Every rate except 20, 24, 30, 36, 40, 45, 48 and 60 works (33 rates). At sigma = 0.3 the share within 0.5 rev/s is about 99.8 percent for 25, 26, 27, 29, 35 and 50 fps alike, so choose by practicality: 25 fps is a standard camera rate and its range of 600 covers the requirement.
 \end{enumerate}
 
 \section{How to join}

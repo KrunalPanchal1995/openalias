@@ -9,11 +9,11 @@ openalias teaches aliasing, the wagon-wheel effect and the sampling theorem with
 - **Start from zero.** Session 1 needs only school arithmetic and angles; no signal processing is assumed.
 - **See it move.** Every session ships a slider app that runs in the browser, with labelled graphs.
 - **Know you got it right.** Each session ends with a checkpoint that prints PASS or FAIL against hand calculations and the exact folding formula.
-- **Build the missing half.** The repo stops at Session 4 on purpose; the roadmap shows the path to the Target.
+- **Build the missing half.** The repo stops at Session 5 on purpose; the roadmap shows the path to the Target.
 
 [Target](#the-target) · [Who is this for](#who-is-this-for) · [Quick start](#quick-start) · [Sessions](#sessions) · [Roadmap](#roadmap) · [Contribute](#contribute) · [Explainer PDF](docs/explainer.pdf)
 
-> **This repo is incomplete on purpose.** Sessions 1 to 4 are here and fully working. The finished Target below is a preview of what the community can build next. We show you the path, not the code. Sessions 5 and up are yours.
+> **This repo is incomplete on purpose.** Sessions 1 to 5 are here and fully working. The finished Target below is a preview of what the community can build next. We show you the path, not the code. Sessions 6 and up are yours.
 
 ## The Target
 
@@ -75,8 +75,9 @@ Every session also opens in your browser with sliders (no install): [live apps](
 | 2 | [The alias formula and the Nyquist limit](sessions/session-02/README.md) | Level 2: mathematical engineering model | 75 min | [open](https://krunalpanchal1995.github.io/openalias/session-02/) |
 | 3 | [Simulate, find the folded peak, recover the true speed](sessions/session-03/README.md) | Level 3: simulation and validation | 90 min | [open](https://krunalpanchal1995.github.io/openalias/session-03/) |
 | 4 | [Noise-proof recovery of the true speed](sessions/session-04/README.md) | Level 3: simulation and validation | 90 min | [open](https://krunalpanchal1995.github.io/openalias/session-04/) |
+| 5 | [A third clip: a wider range and less noise](sessions/session-05/README.md) | Level 3: simulation and validation | 90 min | [open](https://krunalpanchal1995.github.io/openalias/session-05/) |
 
-Each session follows the same six steps: A real-world problem, B concept and theory, C visual explanation, D interactive simulation, E worked example and experiment, F assessment and design challenge. Each ends with `checkpoint.py`, which prints `PASS` or `FAIL` against reference numbers. Session 3 also contains the real-world mini-project: **How fast does the fan really turn?**, and Session 4 the mini-project **Recover the speed from noisy apparent speeds**.
+Each session follows the same six steps: A real-world problem, B concept and theory, C visual explanation, D interactive simulation, E worked example and experiment, F assessment and design challenge. Each ends with `checkpoint.py`, which prints `PASS` or `FAIL` against reference numbers. Session 3 also contains the real-world mini-project: **How fast does the fan really turn?**, Session 4 the mini-project **Recover the speed from noisy apparent speeds**, and Session 5 the mini-project **Choose three frame rates and recover a fast fan**.
 
 ## Architecture
 
@@ -86,14 +87,15 @@ flowchart LR
   S2[Session 2<br/>The alias formula and the Nyquist limit]
   S3[Session 3<br/>Simulate, find the folded peak, recover the true speed]
   S4[Session 4<br/>Noise-proof recovery of the true speed]
-  R[Roadmap S5+<br/>YOU build this]
+  S5[Session 5<br/>A third clip: a wider range and less noise]
+  R[Roadmap S6+<br/>YOU build this]
   T((Target))
-  S1 --> S2 --> S3 --> S4 --> R --> T
+  S1 --> S2 --> S3 --> S4 --> S5 --> R --> T
 ```
 
 | Folder or file | What is inside |
 |---|---|
-| `sessions/` | four sessions: README (A-F), `lesson.py`, notebook, live app, exercises, activity sheet, checkpoint |
+| `sessions/` | five sessions: README (A-F), `lesson.py`, notebook, live app, exercises, activity sheet, checkpoint |
 | `promo/` | the Target: media, live links, and the roadmap (path only) |
 | `docs/` | `explainer.tex` and the built `explainer.pdf` |
 | `tests/` | runs every lesson and checkpoint headless |
@@ -105,7 +107,6 @@ flowchart LR
 
 | Milestone | What you will build | Difficulty |
 |---|---|---|
-| Session 5: A third clip | A recovery function for three clips with a unique answer over a wide range. | intermediate |
 | Session 6: Fans with many identical blades | A clip renderer and a measurement function for N identical blades, with one blade tinted to tell them apart. | advanced |
 | Session 7: A fan that spins up | A tracker that follows the folded apparent speed through time and reconstructs the true speed curve. | advanced |
 | Session 8: Real cameras: variable frame rate and rolling shutter | A simulator with frame timestamps from a clock with 0.5 percent jitter and a line-by-line shutter, plus a correction. | advanced |
